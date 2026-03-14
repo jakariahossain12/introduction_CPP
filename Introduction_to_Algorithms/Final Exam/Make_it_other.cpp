@@ -3,24 +3,24 @@ using namespace std;
 
 map<long long int ,bool> dp;
 
-bool reach(int n){
-    if(n ==1)return true;
-    if(n<1) return false;
+bool reach(int c ,int n){
+    if(n == c)return true;
+    if(n<c) return false;
 
-    if(dp.count(n)){
-        return dp[n];
+    if(dp.count(c)){
+        return dp[c];
     }
     bool op1 = false,op2 = false;
-    if(n%2 == 0 && reach(n/2))
-    op1 = true;
+    
+    op1 = reach(c*2,n);
     
 
-    if(reach(n-3))
-    op2 = true;
+    
+    op2 = reach(c+3,n);
 
     
-    dp[n] = op1 || op2;
-    return dp[n];
+    dp[c] = op1 || op2;
+    return dp[c];
 }
 
 int main(){
@@ -33,7 +33,8 @@ while (t--)
     int n;
     cin>> n ;
 
-    if(reach(n))
+    dp.clear();
+    if(reach(1,n))
     cout<< "YES"<<endl ;
     else
     cout<<"NO"<<endl  ;
